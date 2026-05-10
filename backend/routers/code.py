@@ -1,10 +1,14 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header
 from datetime import datetime
+from typing import Optional
+
 from models.schemas import (
     RunCodeRequest, RunCodeResponse,
     SubmitCodeRequest, SubmissionResponse, ExecutionStatus
 )
 from services import question_service, submission_service
+from services.auth_service import verify_user_token
+from services.user_service import mark_problem_solved
 
 router = APIRouter(prefix="/api/code", tags=["code"])
 
@@ -23,7 +27,7 @@ async def run_code(request: RunCodeRequest):
 
 
 @router.post("/submit", response_model=SubmissionResponse)
-async def submit_code(request: SubmitCodeRequest):
+async def submit_code(request: SubmitCodeRequest, authorization: Optional[str] = Header(None)):
     """Submit code — runs against ALL test cases and saves to DB."""
     question_doc = await question_service.get_question_with_all_tests(request.question_id)
     if not question_doc:
@@ -47,12 +51,21 @@ async def submit_code(request: SubmitCodeRequest):
     else:
         overall_status = ExecutionStatus.WRONG_ANSWER
 
+    # Resolve user identity from JWT (if user is logged in)
+    user_id: Optional[str] = None
+    user_identifier = request.user_identifier or "anonymous"
+    if authorization and authorization.startswith("Bearer "):
+        payload = verify_user_token(authorization[7:])
+        if payload:
+            user_id = payload["sub"]
+            user_identifier = payload.get("username", user_identifier)
+
     # Save submission
     submission_id = await submission_service.save_submission(
         question_id=request.question_id,
         language=request.language,
         code=request.code,
-        user_identifier=request.user_identifier or "anonymous",
+        user_identifier=user_identifier,
         results=results,
         passed=passed,
         total=total,
@@ -64,6 +77,10 @@ async def submit_code(request: SubmitCodeRequest):
     await question_service.increment_submission_count(
         request.question_id, overall_status == ExecutionStatus.ACCEPTED
     )
+
+    # Track user progress
+    if user_id and overall_status == ExecutionStatus.ACCEPTED:
+        await mark_problem_solved(user_id, request.question_id)
 
     score = round((passed / total * 100) if total > 0 else 0.0, 2)
 

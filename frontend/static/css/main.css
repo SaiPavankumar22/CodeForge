@@ -680,3 +680,48 @@ select.form-input {
 @keyframes shimmer { to { background-position: -200% 0; } }
 
 .muted-text { color: var(--text-muted); font-size: 0.85rem; padding: 1rem 0; }
+
+/* ===== USER CHIP ===== */
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-hover);
+  border-radius: 100px;
+  padding: 0.25rem 0.75rem 0.25rem 0.3rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.user-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+}
+
+.user-chip-name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ===== SOLVED PROBLEM CARD ===== */
+.problem-card.solved {
+  border-left: 3px solid rgba(34, 211, 168, 0.5);
+}
+
+.solved-check {
+  color: var(--accent-green);
+  font-size: 1rem;
+  font-weight: 700;
+  display: block;
+  text-align: center;
+}

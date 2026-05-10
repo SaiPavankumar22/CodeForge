@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeForge — Sharpen Your Coding Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="static/favicon.png">
+<link rel="stylesheet" href="static/css/main.css">
+<link rel="stylesheet" href="static/css/landing.css">
+</head>
+<body>
+
+<!-- Ambient background -->
+<div class="ambient-bg">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- NAV -->
+<nav class="lp-nav">
+  <div class="lp-nav-inner">
+    <a href="landing.html" class="logo">
+      <span class="logo-icon">⟨/⟩</span>
+      <span class="logo-text">Code<span class="accent">Forge</span></span>
+    </a>
+    <div class="lp-nav-actions">
+      <button class="btn-outline" id="navAdminBtn">Admin</button>
+      <button class="btn-outline" id="navLoginBtn">Sign In</button>
+      <button class="btn-primary" id="navRegisterBtn">Get Started →</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="lp-hero">
+  <div class="lp-hero-inner">
+
+    <!-- Left: text -->
+    <div class="lp-hero-content">
+      <div class="lp-eyebrow">
+        <span class="lp-eyebrow-dot"></span>
+        Practice · Submit · Improve
+      </div>
+      <h1 class="lp-hero-title">
+        Sharpen Your Edge.<br>
+        <span class="gradient-text">Code Like a Pro.</span>
+      </h1>
+      <p class="lp-hero-sub">
+        Tackle algorithm and data structure problems, get instant execution
+        feedback across 4 languages, and track which problems you've solved —
+        just like LeetCode, but yours to run.
+      </p>
+      <div class="lp-hero-actions">
+        <button class="btn-hero-primary" id="heroRegisterBtn">
+          Start Practicing — It's Free →
+        </button>
+        <button class="btn-hero-secondary" id="heroLoginBtn">
+          Sign In
+        </button>
+      </div>
+      <div class="lp-hero-trust">
+        <span class="trust-item"><span class="trust-icon">✓</span> No setup required</span>
+        <span class="trust-item"><span class="trust-icon">✓</span> 4 languages</span>
+        <span class="trust-item"><span class="trust-icon">✓</span> Real judge</span>
+      </div>
+    </div>
+
+    <!-- Right: visual -->
+    <div class="lp-hero-visual">
+
+      <!-- Editor card -->
+      <div class="code-preview-card">
+        <div class="card-topbar">
+          <div class="card-dots">
+            <span class="card-dot red"></span>
+            <span class="card-dot yellow"></span>
+            <span class="card-dot green"></span>
+          </div>
+          <span class="card-filename">two_sum.py</span>
+          <span class="card-badge-accepted">✓ Accepted</span>
+        </div>
+        <pre class="card-code"><code><span class="code-line"><span class="code-kw">def</span> <span class="code-fn">twoSum</span>(nums, target):</span>
+<span class="code-line">    seen = {}</span>
+<span class="code-line">    <span class="code-kw">for</span> i, n <span class="code-kw">in</span> <span class="code-fn">enumerate</span>(nums):</span>
+<span class="code-line">        complement = target - n</span>
+<span class="code-line">        <span class="code-kw">if</span> complement <span class="code-kw">in</span> seen:</span>
+<span class="code-line">            <span class="code-kw">return</span> [seen[complement], i]</span>
+<span class="code-line">        seen[n] = i</span>
+<span class="code-line"><span class="code-cm"># Time: O(n)  Space: O(n)</span></span></code></pre>
+      </div>
+
+      <!-- Results card -->
+      <div class="results-float-card">
+        <div class="results-title">Test Results</div>
+        <div class="result-row">
+          <span class="result-dot pass"></span>
+          <span>Case 1 — Passed</span>
+          <span class="result-time">12ms</span>
+        </div>
+        <div class="result-row">
+          <span class="result-dot pass"></span>
+          <span>Case 2 — Passed</span>
+          <span class="result-time">9ms</span>
+        </div>
+        <div class="result-row">
+          <span class="result-dot pass"></span>
+          <span>Case 3 — Passed</span>
+          <span class="result-time">11ms</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="lp-stats">
+  <div class="lp-stats-inner">
+    <div class="lp-stat">
+      <span class="lp-stat-val purple" id="statProblems">—</span>
+      <span class="lp-stat-lbl">Problems</span>
+    </div>
+    <div class="lp-stat">
+      <span class="lp-stat-val green">4</span>
+      <span class="lp-stat-lbl">Languages</span>
+    </div>
+    <div class="lp-stat">
+      <span class="lp-stat-val blue">3</span>
+      <span class="lp-stat-lbl">Difficulty Levels</span>
+    </div>
+    <div class="lp-stat">
+      <span class="lp-stat-val yellow">∞</span>
+      <span class="lp-stat-lbl">Submissions</span>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="lp-section">
+  <div class="lp-section-inner">
+    <p class="section-eyebrow">Why CodeForge</p>
+    <h2 class="section-title">Everything You Need to<br><span class="gradient-text">Level Up</span></h2>
+    <p class="section-sub">A complete practice environment built for serious learners. Pick a problem, write a solution, get real feedback.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon purple">🎯</div>
+        <div class="feature-title">Curated Problem Set</div>
+        <div class="feature-desc">Problems across Easy, Medium, and Hard — covering arrays, trees, graphs, dynamic programming, and more.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon green">⚡</div>
+        <div class="feature-title">Real Code Execution</div>
+        <div class="feature-desc">Your code runs against real test cases in a sandboxed environment. Get actual output, not just hints.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon blue">📊</div>
+        <div class="feature-title">Track Your Progress</div>
+        <div class="feature-desc">See which problems you've solved. Completed problems are marked on your problem list so you always know where you stand.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon yellow">🌐</div>
+        <div class="feature-title">4 Languages</div>
+        <div class="feature-desc">Solve in Python, JavaScript, Java, or C++. Each language has starter code, syntax highlighting, and a real compiler.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="lp-section" style="background: rgba(255,255,255,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="lp-section-inner">
+    <p class="section-eyebrow">How It Works</p>
+    <h2 class="section-title">Three Steps to<br><span class="gradient-text">Start Solving</span></h2>
+
+    <div class="steps-wrap">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Create Your Account</div>
+        <div class="step-desc">Sign up in seconds. No credit card, no setup. Just a username, email, and password.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Pick a Problem</div>
+        <div class="step-desc">Browse the problem list. Filter by difficulty or search by topic. Open any problem to see description, constraints, and examples.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Submit &amp; Track</div>
+        <div class="step-desc">Write your solution in the in-browser editor, run it against test cases, and submit. Accepted problems get marked as solved on your list.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="lp-section">
+  <div class="lp-section-inner">
+    <p class="section-eyebrow">Supported Languages</p>
+    <h2 class="section-title">Code in Your<br><span class="gradient-text">Language of Choice</span></h2>
+
+    <div class="lang-grid">
+      <div class="lang-card">
+        <div class="lang-logo">🐍</div>
+        <div class="lang-name">Python</div>
+        <div class="lang-version">Python 3.11</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-logo">⚡</div>
+        <div class="lang-name">JavaScript</div>
+        <div class="lang-version">Node.js</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-logo">☕</div>
+        <div class="lang-name">Java</div>
+        <div class="lang-version">JDK 17+</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-logo">⚙️</div>
+        <div class="lang-name">C++</div>
+        <div class="lang-version">g++ / C++17</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="lp-cta-section">
+  <div class="lp-cta-inner">
+    <p class="section-eyebrow">Ready?</p>
+    <h2 class="section-title">Start Your Journey Today</h2>
+    <p class="section-sub">Join and start practicing. Your solved problems are tracked so you can see your improvement over time.</p>
+    <div class="lp-cta-actions">
+      <button class="btn-hero-primary" id="ctaRegisterBtn">Create Free Account →</button>
+      <button class="btn-hero-secondary" id="ctaLoginBtn">Already have an account</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="lp-footer">
+  <div class="lp-footer-inner">
+    <a href="landing.html" class="logo">
+      <span class="logo-icon">⟨/⟩</span>
+      <span class="logo-text">Code<span class="accent">Forge</span></span>
+    </a>
+    <span class="lp-footer-note">Practice algorithms. Master data structures. Ace the interview.</span>
+  </div>
+</footer>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay hidden" id="authModal">
+  <div class="modal" style="max-width: 420px;">
+    <button class="modal-close" id="authModalClose">✕</button>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Create Account</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="auth-form" id="loginForm">
+      <div class="modal-icon-big">🔐</div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" class="form-input">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" class="form-input">
+      </div>
+      <div class="form-error hidden" id="loginError"></div>
+      <button class="btn-primary full-width" id="loginSubmitBtn" style="margin-top:.5rem;">
+        <span id="loginBtnText">Sign In</span>
+      </button>
+      <div class="auth-divider">or</div>
+      <p style="text-align:center;font-size:0.83rem;color:var(--text-muted)">
+        Don't have an account?
+        <a href="#" onclick="switchAuthTab('register')" style="color:var(--accent);text-decoration:none;">Create one</a>
+      </p>
+      <p style="text-align:center;font-size:0.8rem;color:var(--text-muted); margin-top:0.75rem">
+        Are you an admin?
+        <a href="#" id="adminLinkFromUserModal" style="color:var(--accent);text-decoration:none;">Sign in here</a>
+      </p>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="auth-form hidden" id="registerForm">
+      <div class="modal-icon-big">🚀</div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="regUsername" placeholder="coder_42" class="form-input">
+        <span class="form-hint">3–30 characters, letters/numbers/underscore</span>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="regEmail" placeholder="you@example.com" class="form-input">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="regPassword" placeholder="Choose a password" class="form-input">
+      </div>
+      <div class="form-error hidden" id="registerError"></div>
+      <button class="btn-primary full-width" id="registerSubmitBtn" style="margin-top:.5rem;">
+        <span id="registerBtnText">Create Account</span>
+      </button>
+      <div class="auth-divider">or</div>
+      <p style="text-align:center;font-size:0.83rem;color:var(--text-muted)">
+        Already have an account?
+        <a href="#" onclick="switchAuthTab('login')" style="color:var(--accent);text-decoration:none;">Sign in</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay hidden" id="adminModal">
+  <div class="modal" style="max-width: 420px;">
+    <button class="modal-close" id="adminModalClose">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">🔐</div>
+      <h2>Admin Access</h2>
+      <p>Sign in to manage problems</p>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="adminEmail" placeholder="admin@codeforge.dev" class="form-input">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="adminPassword" placeholder="••••••••" class="form-input">
+      </div>
+      <div class="form-error hidden" id="adminLoginError"></div>
+      <button class="btn-primary full-width" id="adminLoginBtn">
+        <span id="adminLoginBtnText">Sign In</span>
+      </button>
+      <p style="text-align:center;font-size:0.83rem;color:var(--text-muted); margin-top:1rem">
+        Not an admin? <a href="#" id="backToUserAuthLink" style="color:var(--accent);text-decoration:none;">User login</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="static/js/api.js"></script>
+<script>
+// Redirect to problems if already logged in
+if (UserAuth.isLoggedIn()) {
+  window.location.replace('index.html');
+}
+// Redirect to admin if already admin
+if (Auth.isAdmin()) {
+  window.location.replace('admin.html');
+}
+
+// Load problem count into stat
+(async () => {
+  try {
+    const problems = await API.getQuestions();
+    const el = document.getElementById('statProblems');
+    if (el) el.textContent = problems.length;
+  } catch (_) {}
+})();
+
+// ---- Modal control ----
+function openAuth(tab = 'login') {
+  document.getElementById('authModal').classList.remove('hidden');
+  switchAuthTab(tab);
+}
+
+function closeAuth() {
+  document.getElementById('authModal').classList.add('hidden');
+  ['loginError','registerError'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.add('hidden');
+    el.textContent = '';
+  });
+}
+
+function switchAuthTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('tabLogin').classList.toggle('active', isLogin);
+  document.getElementById('tabRegister').classList.toggle('active', !isLogin);
+  document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
+  document.getElementById('registerForm').classList.toggle('hidden', isLogin);
+}
+
+function openAdmin() {
+  document.getElementById('adminModal').classList.remove('hidden');
+  const err = document.getElementById('adminLoginError');
+  err.classList.add('hidden');
+  err.textContent = '';
+}
+
+function closeAdmin() {
+  document.getElementById('adminModal').classList.add('hidden');
+  const err = document.getElementById('adminLoginError');
+  err.classList.add('hidden');
+  err.textContent = '';
+}
+
+// ---- Button bindings ----
+document.getElementById('navAdminBtn').addEventListener('click', () => openAdmin());
+document.getElementById('navLoginBtn').addEventListener('click', () => openAuth('login'));
+document.getElementById('navRegisterBtn').addEventListener('click', () => openAuth('register'));
+document.getElementById('heroRegisterBtn').addEventListener('click', () => openAuth('register'));
+document.getElementById('heroLoginBtn').addEventListener('click', () => openAuth('login'));
+document.getElementById('ctaRegisterBtn').addEventListener('click', () => openAuth('register'));
+document.getElementById('ctaLoginBtn').addEventListener('click', () => openAuth('login'));
+document.getElementById('authModalClose').addEventListener('click', closeAuth);
+document.getElementById('authModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('authModal')) closeAuth();
+});
+
+document.getElementById('adminLinkFromUserModal').addEventListener('click', (e) => {
+  e.preventDefault();
+  closeAuth();
+  openAdmin();
+});
+document.getElementById('adminModalClose').addEventListener('click', closeAdmin);
+document.getElementById('adminModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('adminModal')) closeAdmin();
+});
+document.getElementById('backToUserAuthLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  closeAdmin();
+  openAuth('login');
+});
+
+// Enter key
+['loginPassword'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+});
+['regPassword'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') handleRegister(); });
+});
+document.getElementById('adminPassword').addEventListener('keydown', e => { if (e.key === 'Enter') handleAdminLogin(); });
+
+// ---- Login ----
+document.getElementById('loginSubmitBtn').addEventListener('click', handleLogin);
+async function handleLogin() {
+  const email    = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errEl    = document.getElementById('loginError');
+  const btn      = document.getElementById('loginBtnText');
+
+  if (!email || !password) {
+    showFormError('loginError', 'Please enter email and password');
+    return;
+  }
+  errEl.classList.add('hidden');
+  btn.textContent = 'Signing in...';
+  document.getElementById('loginSubmitBtn').disabled = true;
+
+  try {
+    const resp = await API.loginUser(email, password);
+    UserAuth.setSession(resp.token, resp.user);
+    window.location.href = 'index.html';
+  } catch (e) {
+    showFormError('loginError', e.message || 'Invalid email or password');
+    btn.textContent = 'Sign In';
+    document.getElementById('loginSubmitBtn').disabled = false;
+  }
+}
+
+// ---- Register ----
+document.getElementById('registerSubmitBtn').addEventListener('click', handleRegister);
+async function handleRegister() {
+  const username = document.getElementById('regUsername').value.trim();
+  const email    = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const errEl    = document.getElementById('registerError');
+  const btn      = document.getElementById('registerBtnText');
+
+  if (!username || !email || !password) {
+    showFormError('registerError', 'All fields are required');
+    return;
+  }
+  if (!/^[a-zA-Z0-9_]{3,30}$/.test(username)) {
+    showFormError('registerError', 'Username must be 3–30 characters: letters, numbers, underscore');
+    return;
+  }
+  errEl.classList.add('hidden');
+  btn.textContent = 'Creating account...';
+  document.getElementById('registerSubmitBtn').disabled = true;
+
+  try {
+    const resp = await API.registerUser(username, email, password);
+    UserAuth.setSession(resp.token, resp.user);
+    window.location.href = 'index.html';
+  } catch (e) {
+    showFormError('registerError', e.message || 'Registration failed');
+    btn.textContent = 'Create Account';
+    document.getElementById('registerSubmitBtn').disabled = false;
+  }
+}
+
+function showFormError(elId, msg) {
+  const el = document.getElementById(elId);
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+
+// ---- Admin Login ----
+document.getElementById('adminLoginBtn').addEventListener('click', handleAdminLogin);
+async function handleAdminLogin() {
+  const email = document.getElementById('adminEmail').value.trim();
+  const password = document.getElementById('adminPassword').value;
+  const errEl = document.getElementById('adminLoginError');
+  const btnText = document.getElementById('adminLoginBtnText');
+  const btn = document.getElementById('adminLoginBtn');
+
+  if (!email || !password) {
+    errEl.textContent = 'Please enter email and password';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  errEl.classList.add('hidden');
+  btnText.textContent = 'Signing in...';
+  btn.disabled = true;
+
+  try {
+    const resp = await API.adminLogin(email, password);
+    Auth.setToken(resp.token);
+    window.location.href = 'admin.html';
+  } catch (e) {
+    errEl.textContent = e.message || 'Invalid email or password';
+    errEl.classList.remove('hidden');
+    btnText.textContent = 'Sign In';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>

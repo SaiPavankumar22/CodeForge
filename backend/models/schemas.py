@@ -148,3 +148,31 @@ class AdminLoginResponse(BaseModel):
     success: bool
     token: Optional[str] = None
     message: str
+
+
+# ---- User Auth ----
+
+class UserRegister(BaseModel):
+    username: str = Field(min_length=3, max_length=30)
+    email: str
+    # Intentionally no password length constraints here.
+    password: str
+
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+
+class UserResponse(BaseModel):
+    id: str
+    username: str
+    email: str
+    created_at: datetime
+
+
+class UserLoginResponse(BaseModel):
+    success: bool
+    token: str
+    user: UserResponse
+    message: str

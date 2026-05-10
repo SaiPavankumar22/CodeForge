@@ -4,11 +4,18 @@
 
 let allProblems = [];
 let currentFilter = 'all';
+let solvedIds = new Set();
 
 // ---- Init ----
 document.addEventListener('DOMContentLoaded', async () => {
+  // Guard: redirect to landing if not logged in
+  if (!UserAuth.requireLogin()) return;
+
+  renderUserNav();
   initAdminModal();
-  await loadProblems();
+
+  // Load problems and user progress in parallel
+  await Promise.all([loadProblems(), loadUserProgress()]);
 
   document.getElementById('searchInput').addEventListener('input', renderProblems);
   document.querySelectorAll('.pill').forEach(pill => {
@@ -21,12 +28,53 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
+// ---- User Nav ----
+function renderUserNav() {
+  const user = UserAuth.getUser();
+  if (!user) return;
+  const nav = document.querySelector('.nav');
+  if (!nav) return;
+
+  // Insert username chip + logout before existing links
+  const chip = document.createElement('span');
+  chip.className = 'user-chip';
+  chip.innerHTML = `
+    <span class="user-avatar">${user.username.charAt(0).toUpperCase()}</span>
+    <span class="user-chip-name">${escHtml(user.username)}</span>
+  `;
+
+  const logoutBtn = document.createElement('button');
+  logoutBtn.className = 'btn-ghost';
+  logoutBtn.style.fontSize = '0.78rem';
+  logoutBtn.textContent = 'Logout';
+  logoutBtn.addEventListener('click', () => {
+    UserAuth.clearSession();
+    window.location.replace('landing.html');
+  });
+
+  nav.insertBefore(logoutBtn, nav.firstChild);
+  nav.insertBefore(chip, nav.firstChild);
+}
+
+// ---- Load User Progress ----
+async function loadUserProgress() {
+  try {
+    const progress = await API.getUserProgress();
+    solvedIds = new Set(progress.solved || []);
+    // Update solved stat
+    const el = document.getElementById('solvedCount');
+    if (el) el.textContent = progress.count || 0;
+  } catch (_) {
+    solvedIds = new Set();
+  }
+}
+
+// ---- Load Problems ----
 async function loadProblems() {
   try {
     allProblems = await API.getQuestions();
     renderProblems();
 
-    // Update stats
     const totalSubs = allProblems.reduce((s, p) => s + (p.total_submissions || 0), 0);
     document.getElementById('totalProblems').textContent = allProblems.length;
     document.getElementById('totalSubmissions').textContent = totalSubs.toLocaleString();
@@ -69,10 +117,15 @@ function renderProblems() {
     const acc = p.total_submissions > 0
       ? Math.round((p.accepted_submissions / p.total_submissions) * 100)
       : null;
+    const solved = solvedIds.has(p.id);
 
     return `
-      <a href="problem.html?id=${p.id}" class="problem-card">
-        <div class="problem-num">${idx + 1}</div>
+      <a href="problem.html?id=${p.id}" class="problem-card${solved ? ' solved' : ''}">
+        <div class="problem-num">
+          ${solved
+            ? `<span class="solved-check" title="Solved">✓</span>`
+            : `<span>${idx + 1}</span>`}
+        </div>
         <div class="problem-info">
           <div class="problem-name">${escHtml(p.title)}</div>
           ${p.tags && p.tags.length ? `

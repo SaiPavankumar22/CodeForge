@@ -6,6 +6,7 @@
 <title>CodeForge — Problem</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="static/favicon.png">
 <link rel="stylesheet" href="static/css/main.css">
 <link rel="stylesheet" href="static/css/editor.css">
 </head>
@@ -30,6 +31,7 @@
     </div>
   </div>
   <div class="editor-header-right">
+    <div id="editorUserChip" class="user-chip" style="cursor:default"></div>
     <select class="lang-select" id="langSelect">
       <option value="python">Python</option>
       <option value="javascript">JavaScript</option>
@@ -162,6 +164,23 @@
   });
 </script>
 <script src="static/js/api.js"></script>
+<script>
+  // Redirect to landing if not logged in
+  if (!UserAuth.isLoggedIn()) {
+    window.location.replace('landing.html');
+  }
+  // Populate user chip in editor header
+  (function () {
+    const user = UserAuth.getUser();
+    const chip = document.getElementById('editorUserChip');
+    if (user && chip) {
+      chip.innerHTML = `
+        <span class="user-avatar">${user.username.charAt(0).toUpperCase()}</span>
+        <span class="user-chip-name">${user.username}</span>
+      `;
+    }
+  })();
+</script>
 <script src="static/js/editor.js"></script>
 </body>
 </html>

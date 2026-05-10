@@ -2,7 +2,7 @@
 
 <!-- Update the path below if your logo filename differs -->
 <p align="center">
-  <img src="docs/logo.png" alt="CodeForge logo" width="160" />
+  <img src="docs/logo.png" alt="CodeForge logo" width="720" />
 </p>
 
 <p align="center">
@@ -16,6 +16,7 @@
 CodeForge is a **LeetCode-style coding practice platform** where you can browse problems, solve them in an in-browser editor, and **Run**/**Submit** solutions against test cases.
 
 - **Practice flow**: problems list → open a problem → write code → run against public tests → submit against all tests → view submissions
+- **User accounts**: users can sign up / sign in; accepted problems are **marked solved** on the problem list (you can always re-solve and submit again)
 - **Admin flow**: create/edit problems, add public/private test cases, and set starter code per language
 - **Tech**:
   - **Frontend**: static HTML/CSS/JS (served by the backend)
@@ -35,6 +36,7 @@ CodeForge is a **LeetCode-style coding practice platform** where you can browse 
 │  ├─ routers/              # API routes (/api/...)
 │  └─ services/             # business logic + code executor
 ├─ frontend/                # Static UI served by backend
+│  ├─ landing.html           # Landing page + user auth modal
 │  ├─ index.html
 │  ├─ admin.html
 │  ├─ problem.html
@@ -73,6 +75,12 @@ docker compose up --build
 - **Default URL**: `http://localhost:8080`
 
 By default the compose file maps host port **8080 → container 8000** to avoid clashing with anything already using port 8000.
+
+When running, the backend serves:
+
+- `/` → `landing.html` (login / register)
+- `/index.html` → problems list (requires login)
+- `/problem.html?id=...` → editor (requires login)
 
 If you specifically want to use host port 8000, set `HOST_PORT=8000` (and ensure nothing else is listening on 8000):
 
@@ -137,6 +145,11 @@ The backend reads `backend/.env` (if present). Common settings:
 ### API endpoints (high level)
 
 - **Health**: `GET /api/health`
+- **Users**
+  - `POST /api/users/register`
+  - `POST /api/users/login`
+  - `GET /api/users/me`
+  - `GET /api/users/progress` (list of solved question IDs)
 - **Questions**
   - `GET /api/questions`
   - `GET /api/questions/{idOrSlug}`
@@ -169,3 +182,6 @@ netstat -ano | findstr :8000
 - **Logo not showing**:
   - Ensure your logo file exists at `docs/logo.png`.
   - If your logo has a different name (e.g. `docs/logo.svg`), update the `<img src="...">` path at the top of this README.
+
+- **Login redirect loop**:
+  - Clear browser storage for the site (removes `cf_user_token` / `cf_user`) and sign in again.

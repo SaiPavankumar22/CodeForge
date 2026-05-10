@@ -4,7 +4,7 @@ from fastapi.responses import FileResponse
 import os
 
 from core.database import connect_to_mongo, close_mongo_connection
-from routers import questions, code, auth
+from routers import questions, code, auth, users
 
 app = FastAPI(
     title="CodeForge API",
@@ -27,6 +27,7 @@ app.add_middleware(
 app.include_router(questions.router)
 app.include_router(code.router)
 app.include_router(auth.router)
+app.include_router(users.router)
 
 
 @app.on_event("startup")
@@ -51,6 +52,9 @@ if os.path.exists(frontend_path):
 
     @app.get("/", include_in_schema=False)
     async def serve_index():
+        landing = os.path.join(frontend_path, "landing.html")
+        if os.path.exists(landing):
+            return FileResponse(landing)
         return FileResponse(os.path.join(frontend_path, "index.html"))
 
     @app.get("/{path:path}", include_in_schema=False)

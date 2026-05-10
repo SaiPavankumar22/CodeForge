@@ -44,17 +44,34 @@ const API = {
     return await _post('/code/run', { question_id: questionId, language, code });
   },
 
-  async submitCode(questionId, language, code, userIdentifier = 'anonymous') {
+  async submitCode(questionId, language, code) {
     return await _post('/code/submit', {
       question_id: questionId,
       language,
       code,
-      user_identifier: userIdentifier
-    });
+      user_identifier: UserAuth.getUsername() || 'anonymous',
+    }, 'user');
   },
 
   async getSubmissions(questionId) {
     return await _get(`/code/submissions/${questionId}`);
+  },
+
+  // ---- USER AUTH ----
+  async registerUser(username, email, password) {
+    return await _post('/users/register', { username, email, password });
+  },
+
+  async loginUser(email, password) {
+    return await _post('/users/login', { email, password });
+  },
+
+  async getMe() {
+    return await _get('/users/me', 'user');
+  },
+
+  async getUserProgress() {
+    return await _get('/users/progress', 'user');
   },
 };
 
@@ -95,8 +112,11 @@ async function _delete(path, auth = false) {
 
 function _headers(auth = false) {
   const h = {};
-  if (auth) {
+  if (auth === true || auth === 'admin') {
     const token = localStorage.getItem('cf_admin_token');
+    if (token) h['Authorization'] = `Bearer ${token}`;
+  } else if (auth === 'user') {
+    const token = localStorage.getItem('cf_user_token');
     if (token) h['Authorization'] = `Bearer ${token}`;
   }
   return h;
@@ -114,7 +134,7 @@ async function _handle(res) {
   return res.json();
 }
 
-// Auth helpers
+// Admin auth helpers
 const Auth = {
   isAdmin() {
     return !!localStorage.getItem('cf_admin_token');
@@ -129,5 +149,39 @@ const Auth = {
     if (!this.isAdmin()) {
       window.location.href = 'index.html';
     }
-  }
+  },
+};
+
+// User auth helpers
+const UserAuth = {
+  isLoggedIn() {
+    return !!localStorage.getItem('cf_user_token');
+  },
+  getToken() {
+    return localStorage.getItem('cf_user_token');
+  },
+  getUser() {
+    try {
+      const u = localStorage.getItem('cf_user');
+      return u ? JSON.parse(u) : null;
+    } catch { return null; }
+  },
+  getUsername() {
+    return this.getUser()?.username || null;
+  },
+  setSession(token, user) {
+    localStorage.setItem('cf_user_token', token);
+    localStorage.setItem('cf_user', JSON.stringify(user));
+  },
+  clearSession() {
+    localStorage.removeItem('cf_user_token');
+    localStorage.removeItem('cf_user');
+  },
+  requireLogin() {
+    if (!this.isLoggedIn()) {
+      window.location.replace('landing.html');
+      return false;
+    }
+    return true;
+  },
 };
