@@ -13,11 +13,14 @@
   <img alt="Languages" src="https://img.shields.io/badge/Judge-Python%20%7C%20JS%20%7C%20Java%20%7C%20C%2B%2B-7c6af7" />
 </p>
 
-CodeForge is a lightweight online judge + problem management platform:
+CodeForge is a **LeetCode-style coding practice platform** where you can browse problems, solve them in an in-browser editor, and **Run**/**Submit** solutions against test cases.
 
-- **Frontend**: static HTML/CSS/JS (served by the backend)
-- **Backend**: FastAPI + MongoDB
-- **Judge**: runs user code in **Python / JavaScript / Java / C++**
+- **Practice flow**: problems list → open a problem → write code → run against public tests → submit against all tests → view submissions
+- **Admin flow**: create/edit problems, add public/private test cases, and set starter code per language
+- **Tech**:
+  - **Frontend**: static HTML/CSS/JS (served by the backend)
+  - **Backend**: FastAPI + MongoDB
+  - **Judge**: executes code in **Python / JavaScript / Java / C++**
 
 ---
 
