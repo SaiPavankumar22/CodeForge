@@ -1,0 +1,10 @@
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Editor directories and files
+.vscode/*
+# Environment variables
+backend/.env

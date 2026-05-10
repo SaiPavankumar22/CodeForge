@@ -1,0 +1,31 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    # Host port (CONTAINER stays 8000). Default 8080 so it does not clash with local `uvicorn ... --port 8000`.
+    # Use port 8000: set HOST_PORT=8000 or stop whatever is listening on that port.
+    ports:
+      - "${HOST_PORT:-8080}:8000"
+    environment:
+      MONGODB_URL: mongodb://mongo:27017
+      DATABASE_NAME: codeforge_db
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo_data:
