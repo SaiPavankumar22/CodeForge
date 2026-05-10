@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeForge Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/main.css">
+<link rel="stylesheet" href="static/css/admin.css">
+</head>
+<body class="admin-page">
+
+<div class="ambient-bg">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">⟨/⟩</span>
+      <span class="logo-text">Code<span class="accent">Forge</span></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html" class="nav-link">Problems</a>
+      <span class="nav-badge">Admin</span>
+      <button class="btn-ghost" id="logoutBtn">Logout</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Admin Layout -->
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-section">
+      <p class="sidebar-label">Management</p>
+      <button class="sidebar-item active" data-section="questions">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="3" rx="1" fill="currentColor"/><rect x="3" y="8.5" width="14" height="3" rx="1" fill="currentColor" opacity=".6"/><rect x="3" y="14" width="9" height="3" rx="1" fill="currentColor" opacity=".3"/></svg>
+        Questions
+      </button>
+      <button class="sidebar-item" data-section="create">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 7v6M7 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Create Problem
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+
+    <!-- Questions List Section -->
+    <div class="admin-section active" id="section-questions">
+      <div class="section-header">
+        <h2>All Problems</h2>
+        <button class="btn-primary" id="createNewBtn">+ New Problem</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Difficulty</th>
+              <th>Tags</th>
+              <th>Submissions</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="questionsTableBody">
+            <tr><td colspan="7" class="table-loading">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Create/Edit Problem Section -->
+    <div class="admin-section hidden" id="section-create">
+      <div class="section-header">
+        <h2 id="formTitle">Create New Problem</h2>
+        <button class="btn-ghost" id="cancelFormBtn">← Back to List</button>
+      </div>
+
+      <div class="problem-form" id="problemForm">
+        <!-- Basic Info -->
+        <div class="form-card">
+          <h3 class="form-card-title">Basic Information</h3>
+          <div class="form-row">
+            <div class="form-group flex-3">
+              <label>Title *</label>
+              <input type="text" class="form-input" id="fTitle" placeholder="e.g. Two Sum">
+            </div>
+            <div class="form-group flex-1">
+              <label>Difficulty *</label>
+              <select class="form-input" id="fDifficulty">
+                <option value="Easy">Easy</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group flex-2">
+              <label>Tags (comma-separated)</label>
+              <input type="text" class="form-input" id="fTags" placeholder="array, hash-table, two-pointers">
+            </div>
+            <div class="form-group flex-1">
+              <label>Time Limit (sec)</label>
+              <input type="number" class="form-input" id="fTimeLimit" value="5" min="1" max="30">
+            </div>
+            <div class="form-group flex-1">
+              <label>Memory Limit (MB)</label>
+              <input type="number" class="form-input" id="fMemoryLimit" value="256" min="32">
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-card">
+          <h3 class="form-card-title">Problem Statement</h3>
+          <div class="form-group">
+            <label>Description * (supports markdown)</label>
+            <textarea class="form-textarea" id="fDescription" rows="8" placeholder="Describe the problem clearly. Use markdown for formatting.&#10;&#10;Example:&#10;Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to target."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Constraints</label>
+            <textarea class="form-textarea" id="fConstraints" rows="4" placeholder="• 2 ≤ nums.length ≤ 10^4&#10;• -10^9 ≤ nums[i] ≤ 10^9&#10;• Only one valid answer exists."></textarea>
+          </div>
+        </div>
+
+        <!-- Sample I/O -->
+        <div class="form-card">
+          <h3 class="form-card-title">Sample Input / Output</h3>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Sample Input</label>
+              <textarea class="form-textarea mono" id="fSampleInput" rows="4" placeholder="[2,7,11,15]&#10;9"></textarea>
+            </div>
+            <div class="form-group flex-1">
+              <label>Sample Output</label>
+              <textarea class="form-textarea mono" id="fSampleOutput" rows="4" placeholder="[0,1]"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Starter Code -->
+        <div class="form-card">
+          <h3 class="form-card-title">Starter Code (optional)</h3>
+          <div class="starter-tabs">
+            <button class="stab active" data-lang="python">Python</button>
+            <button class="stab" data-lang="javascript">JavaScript</button>
+            <button class="stab" data-lang="java">Java</button>
+            <button class="stab" data-lang="cpp">C++</button>
+          </div>
+          <div class="starter-editors">
+            <textarea class="form-textarea mono" id="starter-python" rows="8" placeholder="def solution(nums, target):&#10;    # Write your code here&#10;    pass"></textarea>
+            <textarea class="form-textarea mono hidden" id="starter-javascript" rows="8" placeholder="function solution(nums, target) {&#10;    // Write your code here&#10;}"></textarea>
+            <textarea class="form-textarea mono hidden" id="starter-java" rows="8" placeholder="import java.util.*;&#10;public class Solution {&#10;    public int[] solution(int[] nums, int target) {&#10;        // Write your code here&#10;        return new int[]{};&#10;    }&#10;}"></textarea>
+            <textarea class="form-textarea mono hidden" id="starter-cpp" rows="8" placeholder="#include <bits/stdc++.h>&#10;using namespace std;&#10;&#10;int main() {&#10;    // Write your code here&#10;    return 0;&#10;}"></textarea>
+          </div>
+        </div>
+
+        <!-- Test Cases -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3 class="form-card-title">Test Cases</h3>
+            <div class="tc-actions">
+              <button class="btn-ghost small" id="addPublicTC">+ Public</button>
+              <button class="btn-ghost small" id="addPrivateTC">+ Private</button>
+            </div>
+          </div>
+          <div class="testcases-list" id="testCasesFormList">
+            <p class="muted-text" id="noTCMsg">No test cases added yet. Click + Public or + Private to add.</p>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button class="btn-ghost" id="cancelFormBtn2">Cancel</button>
+          <button class="btn-primary large" id="saveProblemBtn">
+            <span id="saveBtnText">Create Problem</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="static/js/api.js"></script>
+<script src="static/js/admin.js"></script>
+</body>
+</html>

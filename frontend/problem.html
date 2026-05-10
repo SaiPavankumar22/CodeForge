@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeForge — Problem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/main.css">
+<link rel="stylesheet" href="static/css/editor.css">
+</head>
+<body class="editor-page">
+
+<!-- Header -->
+<header class="editor-header">
+  <div class="editor-header-left">
+    <a href="index.html" class="logo compact">
+      <span class="logo-icon">⟨/⟩</span>
+      <span class="logo-text">Code<span class="accent">Forge</span></span>
+    </a>
+    <div class="breadcrumb" id="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span id="problemTitle">Loading...</span>
+    </div>
+  </div>
+  <div class="editor-header-center">
+    <div class="timer-display" id="timerDisplay">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span id="timerText">00:00</span>
+    </div>
+  </div>
+  <div class="editor-header-right">
+    <select class="lang-select" id="langSelect">
+      <option value="python">Python</option>
+      <option value="javascript">JavaScript</option>
+      <option value="java">Java</option>
+      <option value="cpp">C++</option>
+    </select>
+    <button class="btn-run" id="runBtn">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M5 3l9 5-9 5V3z" fill="currentColor"/></svg>
+      Run
+    </button>
+    <button class="btn-submit" id="submitBtn">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M2 8h10M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Submit
+    </button>
+  </div>
+</header>
+
+<!-- Main split layout -->
+<div class="editor-layout">
+
+  <!-- Left Panel: Problem Description -->
+  <div class="panel panel-left" id="leftPanel">
+    <div class="panel-tabs">
+      <button class="ptab active" data-tab="description">Description</button>
+      <button class="ptab" data-tab="submissions">Submissions</button>
+    </div>
+
+    <!-- Description Tab -->
+    <div class="tab-content active" id="tab-description">
+      <div class="problem-meta" id="problemMeta">
+        <span class="diff-badge" id="diffBadge">Medium</span>
+        <div class="problem-tags" id="problemTags"></div>
+      </div>
+      <div class="problem-body" id="problemBody">
+        <div class="loading-skeleton">
+          <div class="skel-line w80"></div>
+          <div class="skel-line w100"></div>
+          <div class="skel-line w90"></div>
+          <div class="skel-line w70"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submissions Tab -->
+    <div class="tab-content hidden" id="tab-submissions">
+      <div class="submissions-list" id="submissionsList">
+        <p class="muted-text">No submissions yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resize Handle -->
+  <div class="resize-handle" id="resizeHandle"></div>
+
+  <!-- Right Panel: Editor + Output -->
+  <div class="panel panel-right">
+
+    <!-- Monaco Editor -->
+    <div class="editor-container" id="editorContainer">
+      <div class="editor-toolbar">
+        <span class="editor-lang-label" id="editorLangLabel">Python</span>
+        <div class="editor-actions">
+          <button class="icon-btn" id="resetBtn" title="Reset to starter code">↺</button>
+          <button class="icon-btn" id="fullscreenBtn" title="Toggle fullscreen">⤢</button>
+        </div>
+      </div>
+      <div id="monaco-editor" style="height: 100%;"></div>
+    </div>
+
+    <!-- Output Panel -->
+    <div class="output-panel" id="outputPanel">
+      <div class="output-tabs">
+        <button class="otab active" data-otab="testcases">Test Cases</button>
+        <button class="otab" data-otab="output">Output</button>
+      </div>
+      <div class="output-body">
+        <!-- Test Cases tab -->
+        <div class="otab-content active" id="otab-testcases">
+          <div class="test-cases-list" id="testCasesList">
+            <p class="muted-text">Run your code to see results.</p>
+          </div>
+        </div>
+        <!-- Output tab -->
+        <div class="otab-content hidden" id="otab-output">
+          <div class="output-result" id="outputResult">
+            <p class="muted-text">Output will appear here after running.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Submit Result Modal -->
+<div class="modal-overlay hidden" id="submitModal">
+  <div class="modal result-modal">
+    <button class="modal-close" id="closeSubmitModal">✕</button>
+    <div class="result-header" id="resultHeader">
+      <div class="result-icon" id="resultIcon">✓</div>
+      <h2 id="resultTitle">Accepted</h2>
+      <p id="resultSubtitle">Your solution passed all test cases</p>
+    </div>
+    <div class="result-stats" id="resultStats">
+      <div class="rs-item">
+        <span class="rs-label">Score</span>
+        <span class="rs-value" id="rsScore">100</span>
+      </div>
+      <div class="rs-item">
+        <span class="rs-label">Tests Passed</span>
+        <span class="rs-value" id="rsTests">0/0</span>
+      </div>
+      <div class="rs-item">
+        <span class="rs-label">Runtime</span>
+        <span class="rs-value" id="rsRuntime">0ms</span>
+      </div>
+    </div>
+    <div class="result-actions">
+      <button class="btn-secondary" id="backToListBtn">Back to Problems</button>
+      <button class="btn-primary" id="tryAgainBtn">Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- Monaco Loader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+<script>
+  require.config({
+    paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }
+  });
+</script>
+<script src="static/js/api.js"></script>
+<script src="static/js/editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeForge — Sharpen Your Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+<!-- Ambient background -->
+<div class="ambient-bg">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">⟨/⟩</span>
+      <span class="logo-text">Code<span class="accent">Forge</span></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html" class="nav-link active">Problems</a>
+      <a href="#" class="nav-link" id="adminNavBtn">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Beta v1.0</div>
+    <h1 class="hero-title">Forge Your<br><span class="gradient-text">Coding Skills</span></h1>
+    <p class="hero-sub">Practice algorithms. Master data structures. Ace the interview.</p>
+  </div>
+</section>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-value" id="totalProblems">0</span>
+      <span class="stat-label">Problems</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-value" id="totalSubmissions">0</span>
+      <span class="stat-label">Submissions</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-value">4</span>
+      <span class="stat-label">Languages</span>
+    </div>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M15 15l-2.5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input type="text" class="search-input" placeholder="Search problems..." id="searchInput">
+    </div>
+    <div class="filter-pills">
+      <button class="pill active" data-filter="all">All</button>
+      <button class="pill" data-filter="Easy">Easy</button>
+      <button class="pill" data-filter="Medium">Medium</button>
+      <button class="pill" data-filter="Hard">Hard</button>
+    </div>
+  </div>
+</div>
+
+<!-- Problem list -->
+<main class="problems-main">
+  <div class="problems-grid" id="problemsGrid">
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      <p>Loading problems...</p>
+    </div>
+  </div>
+  <div class="empty-state hidden" id="emptyState">
+    <div class="empty-icon">⚡</div>
+    <h3>No problems found</h3>
+    <p>Try adjusting your search or filter</p>
+  </div>
+</main>
+
+<!-- Admin Login Modal -->
+<div class="modal-overlay hidden" id="adminModal">
+  <div class="modal">
+    <button class="modal-close" id="closeModal">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">🔐</div>
+      <h2>Admin Access</h2>
+      <p>Enter credentials to manage problems</p>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="adminEmail" placeholder="admin@codeforge.dev" class="form-input">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="adminPassword" placeholder="••••••••" class="form-input">
+      </div>
+      <div class="form-error hidden" id="loginError">Invalid credentials</div>
+      <button class="btn-primary full-width" id="loginBtn">
+        <span>Sign In</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="static/js/api.js"></script>
+<script src="static/js/main.js"></script>
+</body>
+</html>
